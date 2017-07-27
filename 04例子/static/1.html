@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="socket.io.js"></script>
+	</head>
+	<body>
+		<h1></h1>
+		<input type="text" placeholder="请输入内容" />
+		<button onclick="sendMsg()">send</button>
+	</body>
+	<script type="text/javascript">
+		
+		let fromUser = '张三'
+		
+		let toUser = '李四'
+		
+		document.querySelector('h1').innerHTML = `${fromUser}发给${toUser}:`
+		
+		let input = document.querySelector('input')
+		
+		let socket = io.connect('ws://127.0.0.1:3000')
+		
+		socket.on('connect',()=>{
+			
+			alert('和服务器连接成功')
+			
+			socket.on(fromUser,(data)=>{
+				
+				alert(`${fromUser}收到${toUser}的信息: ${ data.content}`)
+				
+			})
+			
+			socket.on('disconnect',()=>{
+				
+				alert('和服务器断开连接')
+				socket.close()
+			})
+			
+		})
+		
+		function sendMsg(){
+			
+			socket.emit('msg',{content:input.value,fromUser,toUser})
+		}
+	</script>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="socket.io.js"></script>
+	</head>
+	<body>
+		<button onclick="socketConnect()">连接socket服务器</button>
+		
+		<button onclick="sendMsg()">发送信息</button>
+	</body>
+	
+	<button onclick="disconnect()">断开连接</button>
+	</body>
+	<script type="text/javascript">
+		
+		let socket = null
+		
+		function socketConnect(){
+			
+			//和socket服务器建立连接
+			socket = io.connect('ws://127.0.0.1:3000')
+			
+			//监听socket连接成功事件
+			socket.on('connect',()=>{
+				
+				alert('socket 服务已经建立')
+			})
+			
+			
+			//监听服务端响应事件
+			socket.on('msg',(data)=>{
+				
+				alert('收到服务端响应信息')
+				console.log(data)
+			})
+			
+			socket.on('disconnect',()=>{
+				
+				alert('已断开连接')
+				socket.close()
+			})
+		}
+		
+		
+		function sendMsg(){
+			
+			alert('send')
+			//浏览器向服务端发送信息
+			socket.emit('hello',{content:"hello"})
+		}
+		
+		function disconnect(){
+			
+			socket.close()
+		}
+	</script>
+</html>

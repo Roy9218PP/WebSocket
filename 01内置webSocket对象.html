@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		//创建socket对象，并和服务器建立连接
+		let socket = new WebSocket('ws://127.0.0.1:3000')
+		
+		//socket链接成功后，会执行open事件
+		socket.onopen(()=>{
+			
+			//监听服务端信息
+			socket.onmessage('msg',(data)=>{
+				
+			})
+			
+			//向服务端发送信息
+			socket.send('msg',{})
+		})
+		
+		//断开连接
+		socket.onclose(()=>{
+			
+		})
+	</script>
+</html>
